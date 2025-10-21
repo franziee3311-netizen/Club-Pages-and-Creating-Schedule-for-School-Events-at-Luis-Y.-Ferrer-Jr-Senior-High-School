@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PR2 System</title>
+  <style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url('Luis school bg.jpg') no-repeat center center/cover;
+    color: #333;
+    height: 100vh; 
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: PowderBlue;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+  }
+
+  .logo {
+    height: 50px;
+    margin-right: 10px;
+  }
+
+  .logos {
+    height: 50px;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    background: #4682B4;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: 0.3s;
+  }
+
+  nav ul li a:hover {
+    background: white;
+    color: #4682B4;
+  }
+  
+
+  main {
+    text-align: center;
+    padding: 30px 20px;
+    background-color: rgba(230, 230, 250, 0.9);
+    margin: 10px auto;
+    width: 90%;
+    max-width: 900px;
+    border-radius: 10px;
+    flex-grow: 1;
+    
+  }
+
+  main h1 {
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    color: #2F4F4F;
+  }
+
+  main p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  select, input[type="text"] {
+    padding: 6px 10px;
+    border-radius: 5px;
+    border: 1px solid #4682B4;
+    background-color: white;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+  }
+
+  input[type="text"] {
+    width: 180px;
+  }
+
+  .clubs-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+    max-height: calc(100vh - 280px); 
+    overflow-y: auto;
+  }
+
+  .club {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s;
+  }
+
+  .club:hover {
+    transform: translateY(-5px);
+  }
+
+  .club img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+
+  .club h3 {
+    margin: 8px 0;
+    font-size: 1rem;
+  }
+
+  .club a {
+    display: inline-block;
+    margin-top: 5px;
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+  }
+
+  .club a:hover {
+    text-decoration: underline;
+    transition: 0.3s;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      overflow: auto; 
+    }
+
+    header {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    nav ul {
+      justify-content: center;
+    }
+
+    nav ul li a {
+      font-size: 0.9rem;
+      padding: 6px 10px;
+    }
+
+    main {
+      width: 95%;
+      margin: 10px auto;
+      padding: 20px 15px;
+    }
+
+    .controls {
+      flex-direction: column;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      max-width: 250px;
+    }
+
+    .clubs-container {
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      max-height: unset;
+    }
+  }
+</style>
+
+</head>
+<body>
+
+  <header>
+  <div class="logo-group">
+    <img src="Luis Logo.png" alt="Luis Logo" class="logos">
+    <img src="gentri logo.png" alt="Gentri Logo" class="logo">
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="PR2.html">Home</a></li>
+      <li><a href="PR Clubpage.html">Clubs</a></li>
+      <li><a href="Sched sys.html">Create Schedule</a></li>
+    </ul>
+  </nav>
+</header>
+
+
+  <main>
+    <h1>Luis Y. Ferrer Jr Senior High School Clubs Page</h1>
+    <p>These are the Clubs of Luis Y. Ferrer Jr Senior High School.</p>
+
+ 
+    <div class="controls">
+      <div>
+        <label for="sortSelect"><strong>Sort by:</strong></label>
+        <select id="sortSelect">
+          <option value="az">A - Z</option>
+          <option value="za">Z - A</option>
+        </select>
+      </div>
+      <div>
+        <label for="searchInput"><strong>Search:</strong></label>
+        <input type="text" id="searchInput" placeholder="Search club name...">
+      </div>
+    </div>
+
+    
+    <div class="clubs-container" id="clubsContainer">
+
+     <div class="club">
+        <img src="ARCHI.jpg" alt="Club 16">
+        <h3>ARCHITECH</h3>
+        <a href="https://www.facebook.com/profile.php?id=61578265168107" target="_blank">Visit Facebook</a>
+      </div>
+     
+	 <div class="club">
+        <img src="BKD.jpg" alt="Club 2">
+        <h3>BKD</h3>
+        <a href="https://www.facebook.com/share/1JPsTFkigB/" target="_blank">Visit Facebook</a>
+      </div>
+
+     <div class="club">
+        <img src="DRRM.jpg" alt="Club 3">
+        <h3>DRRM</h3>
+        <a href="https://www.facebook.com/share/1DM7DmF4N2/" target="_blank">Visit Facebook</a>
+      </div>
+
+
+      <div class="club">
+        <img src="ENGLISH.jpg" alt="Club 14">
+        <h3>ENGLISH GUILD</h3>
+        <a href="https://www.facebook.com/engclubLYFJSHS" target="_blank">Visit Facebook</a>
+      </div>
+
+
+     <div class="club">
+        <img src="HUMSSOC.jpg" alt="Club 8">
+        <h3>HUMSSOC</h3>
+        <a href="https://www.facebook.com/HUMSSSocietyLyfjshs" target="_blank">Visit Facebook</a>
+      </div>
+ 
+     <div class="club">
+        <img src="IRG.jpg" alt="Club 13">
+        <h3>IRG</h3>
+        <a href="https://www.facebook.com/inquisitoremresearchguild" target="_blank">Visit Facebook</a>
+      </div>
+
+
+     <div class="club">
+        <img src="LPT.jpg" alt="Club 19">
+        <h3>LUISANO PAGE TURNERS</h3>
+        <a href="https://www.facebook.com/profile.php?id=61577773832602" target="_blank">Visit Facebook</a>
+      </div>
+
+     <div class="club">
+        <img src="LYE.png" alt="Club 7">
+        <h3>LYE</h3>
+        <a href="https://www.facebook.com/LuisianosYoungEntrepreneurs" target="_blank">Visit Facebook</a>
+      </div>
+
+
+     <div class="club">
+        <img src="MATHSOC.jpg" alt="Club 10">
+        <h3>MATHSOC</h3>
+        <a href="https://www.facebook.com/SHS.MathematicalSociety" target="_blank">Visit Facebook</a>
+      </div>
+
+     <div class="club">
+        <img src="redcross.jpg" alt="Club 5">
+        <h3>RCYC</h3>
+        <a href="https://www.facebook.com/share/1CaUwZrvvP/" target="_blank">Visit Facebook</a>
+      </div>
+
+      <div class="club">
+        <img src="SITIO.jpg" alt="Club 15">
+        <h3>SITIO FILIPINO</h3>
+        <a href="https://www.facebook.com/profile.php?id=61565031827217" target="_blank">Visit Facebook</a>
+      </div>
+	  
+       <div class="club">
+     <img src="SSLG.jpg" alt="Club 1">
+        <h3>SSLG</h3>
+        <a href="https://www.facebook.com/share/19bcbKEx3R/" target="_blank">Visit Facebook</a>
+      </div>
+
+     <div class="club">
+        <img src="STELL.jpg" alt="Club 17">
+        <h3>STELLAR CLUB</h3>
+        <a href="https://www.facebook.com/profile.php?id=61578135720540" target="_blank">Visit Facebook</a>
+      </div>
+
+     <div class="club">
+        <img src="STEM GUILD.png" alt="Club 9">
+        <h3>STEM GUILD</h3>
+        <a href="https://www.facebook.com/STEM.LYFJSHS" target="_blank">Visit Facebook</a>
+      </div>
+
+
+     <div class="club">
+        <img src="TDDP.jpg" alt="Club 12">
+        <h3>TDDP</h3>
+        <a href="https://www.facebook.com/profile.php?id=61552248120757" target="_blank">Visit Facebook</a>
+      </div>
+
+
+     <div class="club">
+        <img src="TEAMLUIS.jpg" alt="Club 6">
+        <h3>TEAM LUIS</h3>
+        <a href="https://www.facebook.com/share/19j9V4rFwj/" target="_blank">Visit Facebook</a>
+      </div>
+
+
+     <div class="club">
+        <img src="TCC.jpg" alt="Club 20">
+        <h3>TRUE COLORS CLUB</h3>
+        <a href="https://www.facebook.com/profile.php?id=61578088786664" target="_blank">Visit Facebook</a>
+      </div>
+	  
+	 <div class="club">
+        <img src="TST.jpg" alt="Club 11">
+        <h3>TST</h3>
+        <a href="https://www.facebook.com/thesoutherntruth" target="_blank">Visit Facebook</a>
+      </div>
+
+     <div class="club">
+        <img src="YESO.jpg" alt="Club 4">
+        <h3>YES-O</h3>
+        <a href="https://www.facebook.com/share/1JDmeuhuBa/" target="_blank">Visit Facebook</a>
+      </div>
+
+      <div class="club">
+        <img src="YE.jpg" alt="Club 18">
+        <h3>YOUTH EMPOWERED</h3>
+        <a href="https://www.facebook.com/YELYF2020" target="_blank">Visit Facebook</a>
+      </div>
+
+
+    </div>
+  </main>
+
+  <script>
+    const sortSelect = document.getElementById('sortSelect');
+    const searchInput = document.getElementById('searchInput');
+    const clubsContainer = document.getElementById('clubsContainer');
+
+
+    sortSelect.addEventListener('change', () => {
+      const order = sortSelect.value;
+      const clubs = Array.from(clubsContainer.querySelectorAll('.club'));
+
+      clubs.sort((a, b) => {
+        const nameA = a.querySelector('h3').textContent.trim().toLowerCase();
+        const nameB = b.querySelector('h3').textContent.trim().toLowerCase();
+        return order === 'az' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+      });
+
+      clubsContainer.innerHTML = '';
+      clubs.forEach(club => clubsContainer.appendChild(club));
+    });
+
+  
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase();
+      const clubs = clubsContainer.querySelectorAll('.club');
+      clubs.forEach(club => {
+        const name = club.querySelector('h3').textContent.toLowerCase();
+        club.style.display = name.includes(query) ? '' : 'none';
+      });
+    });
+  </script>
+
+</body>
+</html>

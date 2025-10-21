@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PR2 System</title>
+  <style>
+    
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('Luis school bg.jpg') no-repeat center center/cover;
+      color: #333;
+    }
+
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: PowderBlue;
+      flex-wrap: wrap;
+    }
+
+    
+    .logos {
+      height: 50px;
+      
+    }
+
+    .logo {
+      height: 50px;
+    }
+
+    
+    nav ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      display: inline-block;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      background: #4682B4;
+      padding: 8px 15px;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+      background: white;
+      color: #4682B4;
+    }
+
+    
+    main {
+      text-align: center;
+      padding: 60px 30px;
+      background-color: rgba(230, 230, 250, 0.9);
+      margin: 50px auto;
+      width: 90%;
+      max-width: 900px;
+      border-radius: 10px;
+    }
+
+    main h1 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: #2F4F4F;
+    }
+
+    main p {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #333;
+    }
+
+    
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      nav ul {
+        justify-content: center;
+      }
+
+      nav ul li a {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+      }
+
+      .logos, .logo {
+        height: 40px;
+      }
+
+      main {
+        width: 95%;
+        margin: 20px auto;
+        padding: 30px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <img src="Luis Logo.png" alt="School Logo" class="logos">
+      <img src="gentri logo.png" alt="School Logo" class="logo">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="PR2.html">Home</a></li>
+        <li><a href="PR Clubpage.html">Clubs</a></li>
+        <li><a href="Sched sys.html">Create Schedule</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Welcome to Our School</h1>
+    <p>
+      This System focuses on School clubs and for making a organized event
+    </p>
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School Club Scheduling System</title>
+  <style>
+ body { font-family: Arial, sans-serif; background: #f4f4f9; margin: 0; }
+
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: PowderBlue;
+      flex-wrap: wrap;
+    }
+
+    
+    .logos {
+      height: 50px;
+      margin-right: 5px;
+    }
+
+    .logo {
+      height: 50px;
+    }
+
+    
+    nav ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      display: inline-block;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      background: #4682B4;
+      padding: 8px 15px;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+      background: white;
+      color: #4682B4;
+    }
+    nav { text-align: center; background: PowderBlue; padding: 10px; }
+    nav button { margin: 5px; padding: 10px; cursor: pointer; border: none; border-radius: 5px; }
+    nav button:hover { background: #ccc; }
+    section { display: none; padding: 20px; }
+    .active { display: block; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+    .form-box {
+      background: #fff; padding: 15px; border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2); margin-bottom: 15px;
+    }
+    input, textarea { width: 100%; padding: 8px; margin: 5px 0; }
+    button.save { background: #004080; color: white; }
+    button.sort { background: #ffcc00; }
+    .warning { color: red; font-weight: bold; }
+
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      overflow: auto;
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      padding: 30px;
+      border: 1px solid #888;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      animation: slideDown 0.3s ease;
+    }
+    @keyframes slideDown {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    .modal-header {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #004080;
+      text-align: center;
+    }
+    .modal-input {
+      width: calc(100% - 24px);
+      padding: 12px;
+      margin: 10px 0;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    .modal-input:focus {
+      outline: none;
+      border-color: #004080;
+    }
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .modal-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .btn-login {
+      background: #004080;
+      color: white;
+    }
+    .btn-login:hover {
+      background: #003366;
+    }
+    .btn-cancel {
+      background: #ccc;
+      color: #333;
+    }
+    .btn-cancel:hover {
+      background: #bbb;
+    }
+    .error-msg {
+      color: red;
+      font-size: 13px;
+      margin-top: 10px;
+      text-align: center;
+      display: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo-group">
+    <img src="Luis Logo.png" alt="Luis Logo" class="logos">
+    <img src="gentri logo.png" alt="Gentri Logo" class="logo">
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="PR2.html">Home</a></li>
+      <li><a href="PR Clubpage.html">Clubs</a></li>
+      <li><a href="Sched sys.html">Create Schedule</a></li>
+    </ul>
+  </nav>
+</header>
+
+<nav>
+  <button onclick="requestLogin('admin')">Admin (SSLG)</button>
+  <button onclick="requestLogin('subadmin')">Sub-Admin (President)</button>
+  <button onclick="showSection('member')">Member</button>
+</nav>
+
+
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header" id="modalTitle">Admin Login</div>
+    <input type="text" id="username" class="modal-input" placeholder="Username" autocomplete="off">
+    <input type="password" id="password" class="modal-input" placeholder="Password" autocomplete="off">
+    <div class="error-msg" id="errorMsg">Invalid username or password!</div>
+    <div class="modal-buttons">
+      <button class="modal-btn btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="modal-btn btn-login" onclick="validateLogin()">Login</button>
+    </div>
+  </div>
+</div>
+
+<section id="admin">
+  <h2>Admin Dashboard (SSLG)</h2>
+  <div class="form-box">
+    <h3>Add New Schedule</h3>
+    <input type="text" id="clubName" placeholder="School Club" required>
+    <input type="text" id="eventName" placeholder="Event Name" required>
+    <input type="text" id="eventVenue" placeholder="Venue" required>
+    <input type="date" id="eventDate" required>
+    <label>Start Time:</label>
+    <input type="time" id="startTime" required>
+    <label>End Time:</label>
+    <input type="time" id="endTime" required>
+    <textarea id="eventDesc" placeholder="Description"></textarea>
+    <button class="save" onclick="addSchedule()">Save Schedule</button>
+    <p class="warning" id="warningMsg"></p>
+  </div>
+
+  <h3>All Schedules</h3>
+  <table id="scheduleTable">
+    <tr><th>Club</th><th>Event</th><th>Venue</th><th>Date</th><th>Start</th><th>End</th><th>Description</th><th>Action</th></tr>
+  </table>
+</section>
+
+<section id="subadmin">
+  <h2>Sub-Admin Dashboard (President of the Club)</h2>
+  <p>Can edit schedules and arrange them by date.</p>
+  <button class="sort" onclick="sortSchedules()">Sort by Date</button>
+  <table id="subadminTable">
+    <tr><th>Club</th><th>Event</th><th>Venue</th><th>Date</th><th>Start</th><th>End</th><th>Description</th><th>Edit</th></tr>
+  </table>
+</section>
+
+<section id="member" class="active">
+  <h2>Member Dashboard (Members of the Club)</h2>
+  <p>Can only view schedules.</p>
+  <table id="memberTable">
+    <tr><th>Club</th><th>Event</th><th>Venue</th><th>Date</th><th>Start</th><th>End</th><th>Description</th></tr>
+  </table>
+</section>
+
+<script>
+
+const credentials = {
+  admin: { username: 'admin', password: 'admin123' },
+  subadmin: { username: 'subadmin', password: 'subadmin123' }
+};
+
+let currentRole = '';
+
+function requestLogin(role) {
+  currentRole = role;
+  const modal = document.getElementById('loginModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const errorMsg = document.getElementById('errorMsg');
+  
+  modalTitle.textContent = role === 'admin' ? 'Admin Login (SSLG)' : 'Sub-Admin Login (President)';
+  document.getElementById('username').value = '';
+  document.getElementById('password').value = '';
+  errorMsg.style.display = 'none';
+  
+  modal.style.display = 'block';
+  
+
+  setTimeout(function() {
+    document.getElementById('username').focus();
+  }, 100);
+}
+
+function closeModal() {
+  document.getElementById('loginModal').style.display = 'none';
+ 
+}
+
+function validateLogin() {
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const errorMsg = document.getElementById('errorMsg');
+  
+  if (username === credentials[currentRole].username && password === credentials[currentRole].password) {
+    closeModal();
+    showSection(currentRole);
+  } else {
+    errorMsg.style.display = 'block';
+  }
+}
+
+
+
+function showSection(role) {
+  document.querySelectorAll("section").forEach(function(sec) {
+    sec.classList.remove("active");
+  });
+  document.getElementById(role).classList.add("active");
+  loadSchedules();
+}
+
+function addSchedule() {
+  let club = document.getElementById("clubName").value;
+  let eventName = document.getElementById("eventName").value;
+  let venue = document.getElementById("eventVenue").value;
+  let eventDate = document.getElementById("eventDate").value;
+  let start = document.getElementById("startTime").value;
+  let end = document.getElementById("endTime").value;
+  let desc = document.getElementById("eventDesc").value;
+
+  if (!club || !eventName || !venue || !eventDate || !start || !end) {
+    alert("Please fill out all fields.");
+    return;
+  }
+
+  let schedules = JSON.parse(localStorage.getItem("schedules")) || [];
+  let conflict = schedules.some(function(s) {
+    return s.date === eventDate && 
+      ((start >= s.start && start < s.end) || (end > s.start && end <= s.end));
+  });
+
+  if (conflict) {
+    document.getElementById("warningMsg").innerText = "Time conflict detected with another event!";
+    return;
+  } else {
+    document.getElementById("warningMsg").innerText = "";
+  }
+
+  schedules.push({
+    club: club,
+    name: eventName,
+    venue: venue,
+    date: eventDate,
+    start: start,
+    end: end,
+    desc: desc,
+    editedBy: "Not yet edited",
+    editedAt: "—"
+  });
+
+  localStorage.setItem("schedules", JSON.stringify(schedules));
+
+  document.getElementById("clubName").value = "";
+  document.getElementById("eventName").value = "";
+  document.getElementById("eventVenue").value = "";
+  document.getElementById("eventDate").value = "";
+  document.getElementById("startTime").value = "";
+  document.getElementById("endTime").value = "";
+  document.getElementById("eventDesc").value = "";
+
+  loadSchedules();
+}
+
+function loadSchedules() {
+  let schedules = JSON.parse(localStorage.getItem("schedules")) || [];
+
+
+  let adminTable = document.getElementById("scheduleTable");
+  adminTable.innerHTML = "<tr><th>Club</th><th>Event</th><th>Venue</th><th>Date</th><th>Start</th><th>End</th><th>Description</th><th>Edited By</th><th>Edited At</th><th>Action</th></tr>";
+  schedules.forEach(function(s, i) {
+    adminTable.innerHTML += "<tr>" +
+      "<td>" + s.club + "</td>" +
+      "<td>" + s.name + "</td>" +
+      "<td>" + s.venue + "</td>" +
+      "<td>" + s.date + "</td>" +
+      "<td>" + s.start + "</td>" +
+      "<td>" + s.end + "</td>" +
+      "<td>" + s.desc + "</td>" +
+      "<td>" + (s.editedBy || "Not yet edited") + "</td>" +
+      "<td>" + (s.editedAt || "—") + "</td>" +
+      "<td><button onclick='deleteSchedule(" + i + ")'>Delete</button></td>" +
+    "</tr>";
+  });
+
+
+  let subTable = document.getElementById("subadminTable");
+  subTable.innerHTML = "<tr><th>Club</th><th>Event</th><th>Venue</th><th>Date</th><th>Start</th><th>End</th><th>Description</th><th>Edited By</th><th>Edited At</th><th>Edit</th></tr>";
+  schedules.forEach(function(s, i) {
+    subTable.innerHTML += "<tr>" +
+      "<td>" + s.club + "</td>" +
+      "<td>" + s.name + "</td>" +
+      "<td>" + s.venue + "</td>" +
+      "<td>" + s.date + "</td>" +
+      "<td>" + s.start + "</td>" +
+      "<td>" + s.end + "</td>" +
+      "<td>" + s.desc + "</td>" +
+      "<td>" + (s.editedBy || "Not yet edited") + "</td>" +
+      "<td>" + (s.editedAt || "—") + "</td>" +
+      "<td><button onclick='editSchedule(" + i + ")'>Edit</button></td>" +
+    "</tr>";
+  });
+
+
+  let memTable = document.getElementById("memberTable");
+  memTable.innerHTML = "<tr><th>Club</th><th>Event</th><th>Venue</th><th>Date</th><th>Start</th><th>End</th><th>Description</th><th>Edited By</th><th>Edited At</th></tr>";
+  schedules.forEach(function(s) {
+    memTable.innerHTML += "<tr>" +
+      "<td>" + s.club + "</td>" +
+      "<td>" + s.name + "</td>" +
+      "<td>" + s.venue + "</td>" +
+      "<td>" + s.date + "</td>" +
+      "<td>" + s.start + "</td>" +
+      "<td>" + s.end + "</td>" +
+      "<td>" + s.desc + "</td>" +
+      "<td>" + (s.editedBy || "Not yet edited") + "</td>" +
+      "<td>" + (s.editedAt || "—") + "</td>" +
+    "</tr>";
+  });
+}
+
+function deleteSchedule(index) {
+  let schedules = JSON.parse(localStorage.getItem("schedules")) || [];
+  schedules.splice(index, 1);
+  localStorage.setItem("schedules", JSON.stringify(schedules));
+  loadSchedules();
+}
+
+function editSchedule(index) {
+  let schedules = JSON.parse(localStorage.getItem("schedules")) || [];
+  let editor = prompt("Enter your name (Sub-Admin):");
+  if (!editor) return alert("Edit canceled. No name entered.");
+
+  let newClub = prompt("Edit Club:", schedules[index].club);
+  let newName = prompt("Edit Event Name:", schedules[index].name);
+  let newVenue = prompt("Edit Venue:", schedules[index].venue);
+  let newDate = prompt("Edit Event Date (YYYY-MM-DD):", schedules[index].date);
+  let newStart = prompt("Edit Start Time:", schedules[index].start);
+  let newEnd = prompt("Edit End Time:", schedules[index].end);
+  let newDesc = prompt("Edit Description:", schedules[index].desc);
+
+  const editTime = new Date().toLocaleString();
+
+  schedules[index] = {
+    club: newClub,
+    name: newName,
+    venue: newVenue,
+    date: newDate,
+    start: newStart,
+    end: newEnd,
+    desc: newDesc,
+    editedBy: editor,
+    editedAt: editTime
+  };
+
+  localStorage.setItem("schedules", JSON.stringify(schedules));
+  loadSchedules();
+}
+
+function sortSchedules() {
+  let schedules = JSON.parse(localStorage.getItem("schedules")) || [];
+  schedules.sort(function(a, b) {
+    return new Date(a.date) - new Date(b.date);
+  });
+  localStorage.setItem("schedules", JSON.stringify(schedules));
+  loadSchedules();
+}
+
+
+window.onload = function() {
+
+  window.onclick = function(event) {
+    const modal = document.getElementById('loginModal');
+    if (event.target === modal) {
+      closeModal();
+    }
+  };
+
+
+  document.getElementById('username').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+      validateLogin();
+    }
+  });
+
+  document.getElementById('password').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+      validateLogin();
+    }
+  });
+
+
+  loadSchedules();
+};
+</script>
+
+</body>
+</html>
